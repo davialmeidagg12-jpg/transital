@@ -6,83 +6,125 @@
     <title>Emergência Transital</title>
     <link rel="icon" href="icon.png" type="image/png">
     <style>
-        body { font-family: sans-serif; background: #1a1a1a; color: white; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #ffcc00; font-size: 24px; margin-bottom: 20px; }
-        .grid { display: grid; gap: 15px; }
-        .btn { 
-            display: flex; align-items: center; justify-content: center; flex-direction: column;
-            padding: 20px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; 
-            color: white; cursor: pointer; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .emergencia { background: #e63946; } /* Vermelho */
-        .zap { background: #25d366; }       /* Verde WhatsApp */
-        .duvida { background: #ffcc00; color: #1a1a1a; } /* Amarelo */
+        :root { --amarelo: #ffcc00; --vermelho: #d90429; --verde: #25d366; --fundo: #121212; --card: #1e1e1e; }
+        body { font-family: sans-serif; background: var(--fundo); color: white; margin: 0; padding: 0; padding-bottom: 80px; }
         
-        /* Seção das Placas */
-        #dicionario { display: none; margin-top: 30px; text-align: left; background: #333; padding: 20px; border-radius: 20px; }
-        .placa-item { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        .placa-img { width: 60px; margin-right: 15px; }
-        .placa-info b { color: #ffcc00; display: block; font-size: 16px; }
-        .placa-info p { margin: 5px 0; font-size: 13px; color: #ddd; }
+        /* Cabeçalho */
+        header { background: var(--amarelo); color: black; padding: 15px; text-align: center; font-weight: bold; font-size: 20px; position: sticky; top: 0; z-index: 100; }
+
+        /* Container das Páginas */
+        .page { display: none; padding: 20px; animation: fadeIn 0.3s; }
+        .active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Botões e Cards */
+        .btn { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 20px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; color: white; text-decoration: none; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
+        .emergencia { background: var(--vermelho); }
+        .zap { background: var(--verde); }
+        .card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--amarelo); text-align: left; }
+
+        /* Menu Inferior (Navigation Bar) */
+        nav { position: fixed; bottom: 0; width: 100%; background: #1a1a1a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; }
+        nav button { background: none; border: none; color: #888; font-size: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
+        nav button.active-nav { color: var(--amarelo); }
+        .nav-icon { font-size: 24px; margin-bottom: 4px; }
+
+        /* Dicionário de Placas */
+        .placa-box { display: flex; align-items: center; background: #2a2a2a; padding: 10px; border-radius: 10px; margin-bottom: 10px; }
+        .placa-img { width: 50px; margin-right: 15px; }
     </style>
 </head>
 <body>
 
-    <h1>🚨 Emergência Transital</h1>
+    <header id="titulo-app">Emergência Transital</header>
 
-    <div class="grid">
-        <a href="tel:191" class="btn emergencia">
-            <span>📞</span> ACIDENTE (Ligar 191)
-        </a>
+    <!-- PÁGINA 1: HOME (EMERGÊNCIA) -->
+    <div id="home" class="page active">
+        <h2 style="text-align: center;">Socorro Imediato</h2>
+        <a href="tel:191" class="btn emergencia"><span>📞</span> LIGAR POLÍCIA (191)</a>
+        <a href="tel:193" class="btn emergencia" style="background:#b91c1c;"><span>🚑</span> BOMBEIROS (193)</a>
+        <a href="#" id="btn-zap" class="btn zap"><span>📍</span> ENVIAR LOCALIZAÇÃO</a>
+        <button class="btn" style="background:#fff; color:#000;" onclick="toggleLanterna()" id="btn-lanterna"><span>🔦</span> SINALIZADOR NOTURNO</button>
+    </div>
 
-        <a href="#" id="btn-zap" class="btn zap">
-            <span>🟢</span> ENVIAR LOCALIZAÇÃO
-        </a>
+    <!-- PÁGINA 2: EDUCAÇÃO (PLACAS) -->
+    <div id="educacao" class="page">
+        <h2 style="text-align: center;">Dicionário de Placas</h2>
+        <div class="placa-box">
+            <img src="https://upload.wikimedia.org" class="placa-img">
+            <div><b>PARE</b><p style="margin:0; font-size:12px;">Parada obrigatória total.</p></div>
+        </div>
+        <div class="placa-box">
+            <img src="https://upload.wikimedia.org" class="placa-img">
+            <div><b>OBRAS</b><p style="margin:0; font-size:12px;">Atenção a operários na pista.</p></div>
+        </div>
+    </div>
 
-        <!-- NOVO BOTÃO DE DUVIDA -->
-        <button class="btn duvida" onclick="toggleDicionario()">
-            <span>❓</span> QUE PLACA É ESTA?
+    <!-- PÁGINA 3: CHECKLIST (SEGURANÇA) -->
+    <div id="checklist" class="page">
+        <h2 style="text-align: center;">Antes de Dirigir</h2>
+        <div class="card">✅ <b>Pneus:</b> Verifique a calibração e o estepe.</div>
+        <div class="card">✅ <b>Luzes:</b> Teste setas, faróis e luz de freio.</div>
+        <div class="card">✅ <b>Água e Óleo:</b> Confira os níveis no motor.</div>
+        <div class="card">✅ <b>Documentos:</b> CNH e CRLV em dia?</div>
+    </div>
+
+    <!-- PÁGINA 4: SOBRE -->
+    <div id="sobre" class="page">
+        <h2 style="text-align: center;">Sobre o Projeto</h2>
+        <p>O <b>Emergência Transital</b> foi criado para apoiar motoristas novatos e idosos, garantindo que ninguém se sinta perdido no trânsito.</p>
+        <p>Dúvidas? Entre em contato com o suporte.</p>
+    </div>
+
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav>
+        <button onclick="showPage('home', this)" class="active-nav">
+            <span class="nav-icon">🚨</span>Início
         </button>
-    </div>
-
-    <!-- SEÇÃO DICIONÁRIO (Invisível até clicar) -->
-           <!-- Placa PARE -->
-        <div class="placa-item">
-            <img src="https://upload.wikimedia.org" class="placa-img" alt="PARE">
-            <div class="placa-info"><b>PARE</b><p>Parada obrigatória total antes de seguir.</p></div>
-        </div>
-
-        <!-- Placa OBRAS -->
-        <div class="placa-item">
-            <img src="https://upload.wikimedia.org" class="placa-img" alt="OBRAS">
-            <div class="placa-info"><b>OBRAS</b><p>Atenção a operários e máquinas na pista.</p></div>
-        </div>
-
-        <!-- Placa PEDESTRES -->
-        <div class="placa-item">
-            <img src="https://upload.wikimedia.org" class="placa-img" alt="PEDESTRES">
-            <div class="placa-info"><b>PEDESTRES</b><p>Passagem sinalizada de pedestres adiante.</p></div>
-        </div>
-
-
-        <button class="btn" style="background: #555; width: 100%;" onclick="toggleDicionario()">FECHAR</button>
-    </div>
+        <button onclick="showPage('educacao', this)">
+            <span class="nav-icon">❓</span>Placas
+        </button>
+        <button onclick="showPage('checklist', this)">
+            <span class="nav-icon">📋</span>Checklist
+        </button>
+        <button onclick="showPage('sobre', this)">
+            <span class="nav-icon">ℹ️</span>Sobre
+        </button>
+    </nav>
 
     <script>
-        // Função para mostrar/esconder o dicionário
-        function toggleDicionario() {
-            const dic = document.getElementById('dicionario');
-            dic.style.display = (dic.style.display === 'block') ? 'none' : 'block';
-            window.scrollTo(0, document.body.scrollHeight);
+        // Troca de páginas
+        function showPage(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-nav'));
+            btn.classList.add('active-nav');
+            window.scrollTo(0,0);
         }
 
-        // Função Localização WhatsApp
+        // Lanterna
+        let lanternaInterval;
+        let piscando = false;
+        function toggleLanterna() {
+            const btn = document.getElementById('btn-lanterna');
+            if (!piscando) {
+                piscando = true; btn.innerHTML = "<span>🛑</span> PARAR";
+                lanternaInterval = setInterval(() => {
+                    document.body.style.background = document.body.style.background === 'red' ? 'white' : '#121212';
+                }, 300);
+            } else {
+                piscando = false; clearInterval(lanternaInterval);
+                document.body.style.background = '#121212';
+                btn.innerHTML = "<span>🔦</span> SINALIZADOR NOTURNO";
+            }
+        }
+
+        // WhatsApp Localização
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(p) {
-                document.getElementById('btn-zap').href = `https://api.whatsapp.com de ajuda no trânsito! Minha localização: https://www.google.com{p.coords.latitude},${p.coords.longitude}`;
+            navigator.geolocation.getCurrentPosition(p => {
+                document.getElementById('btn-zap').href = `https://api.whatsapp.com de ajuda no trânsito! Localização: https://www.google.com{p.coords.latitude},${p.coords.longitude}`;
             });
         }
     </script>
-
 </body>
 </html>
