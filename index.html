@@ -6,59 +6,61 @@
     <title>Emergência Transital</title>
     <link rel="icon" href="icon.png" type="image/png">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1a1a1a; color: white; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #ffcc00; font-size: 24px; margin-bottom: 5px; }
-        p { color: #ccc; font-size: 14px; margin-bottom: 25px; }
+        body { font-family: sans-serif; background: #1a1a1a; color: white; margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #ffcc00; font-size: 24px; margin-bottom: 20px; }
         .grid { display: grid; gap: 15px; }
-        
-        /* Botões Gigantes para Acessibilidade */
         .btn { 
             display: flex; align-items: center; justify-content: center; flex-direction: column;
-            padding: 25px; border: none; border-radius: 20px; font-size: 20px; font-weight: bold; 
-            color: white; cursor: pointer; text-decoration: none; transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            padding: 20px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; 
+            color: white; cursor: pointer; text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .btn:active { transform: scale(0.95); }
-        
-        .emergencia { background: #e63946; } /* Polícia/Bombeiros */
-        .obras { background: #f4a261; }      /* Sinalização */
-        .animais { background: #8d6e63; }    /* Cuidado */
-        .ajuda { background: #457b9d; }      /* Educação */
-
-        .icon-grande { font-size: 45px; margin-bottom: 10px; }
-        .subtexto { font-size: 12px; font-weight: normal; opacity: 0.9; margin-top: 5px; }
+        .emergencia { background: #e63946; } /* Vermelho */
+        .zap { background: #25d366; }       /* Verde WhatsApp */
+        .info { background: #4a4a4a; border: 2px solid #ffcc00; text-align: left; padding: 15px; border-radius: 15px; margin-top: 20px; }
+        .icon-grande { font-size: 35px; margin-bottom: 5px; }
+        .sub { font-size: 12px; font-weight: normal; opacity: 0.9; }
+        li { margin-bottom: 10px; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <h1>🚨 Emergência Transital</h1>
-    <p>Toque rápido para ajuda imediata:</p>
 
     <div class="grid">
-        <!-- BOTÃO ACIDENTE: Liga para a Polícia Rodoviária Federal -->
+        <!-- BOTÃO ACIDENTE -->
         <a href="tel:191" class="btn emergencia">
-            <span class="icon-grande">📞</span> 
-            ACIDENTE (Ligar 191)
-            <span class="subtexto">Chamar Polícia Rodoviária</span>
+            <span class="icon-grande">📞</span> ACIDENTE (Ligar 191)
+            <span class="sub">Polícia Rodoviária</span>
         </a>
 
-        <!-- BOTÃO BOMBEIROS: Caso haja feridos -->
-        <a href="tel:193" class="btn emergencia" style="background: #b91c1c;">
-            <span class="icon-grande">🚑</span> 
-            FERIDOS (Ligar 193)
-            <span class="subtexto">Chamar Bombeiros/SAMU</span>
+        <!-- BOTÃO WHATSAPP LOCALIZAÇÃO -->
+        <a href="https://api.whatsapp.com de ajuda no trânsito! Minha localização: " target="_blank" class="btn zap">
+            <span class="icon-grande">🟢</span> ENVIAR LOCALIZAÇÃO
+            <span class="sub">Avisar família pelo WhatsApp</span>
         </a>
 
-        <button class="btn obras" onclick="alert('OBRAS: Reduza a velocidade, ligue o pisca-alerta e siga os cones.')">
-            <span class="icon-grande">🚧</span> 
-            OBRAS NA PISTA
-        </button>
-
-        <button class="btn animais" onclick="alert('ANIMAL NA VIA: Não buzine nem jogue luz alta! Diminua e passe devagar.')">
-            <span class="icon-grande">🐾</span> 
-            ANIMAL NA VIA
-        </button>
+        <!-- INSTRUÇÕES DE SEGURANÇA -->
+        <div class="info">
+            <strong style="color: #ffcc00; display: block; margin-bottom: 10px;">⚠️ O QUE FAZER AGORA?</strong>
+            <ul>
+                <li>✅ <b>Sinalize:</b> Coloque o triângulo a pelo menos 30 passos largos do carro.</li>
+                <li>✅ <b>Segurança:</b> Saia do veículo e fique atrás da barreira de proteção (guardrail).</li>
+                <li>✅ <b>Visibilidade:</b> Se for noite, ligue o pisca-alerta imediatamente.</li>
+            </ul>
+        </div>
     </div>
+
+    <script>
+        // Função para tentar pegar a localização e colocar no link do zap automaticamente
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                const linkZap = document.querySelector('.zap');
+                linkZap.href = `https://api.whatsapp.com de ajuda no trânsito! Minha localização: https://www.google.com{lat},${lon}`;
+            });
+        }
+    </script>
 
 </body>
 </html>
