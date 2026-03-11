@@ -8,52 +8,43 @@
         :root { 
             --amarelo: #ffcc00; --vermelho: #ff4d4d; --verde: #2ecc71; 
             --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
-            --fonte-base: 16px; --padding-base: 18px;
         }
 
-        /* MODO IDOSO / ACESSIBILIDADE */
-        .modo-idoso { --fonte-base: 24px; --padding-base: 28px; --fundo: #000; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 100px; overflow: hidden; height: 100vh; }
+        
+        header { background: var(--amarelo); color: #000; padding: 15px; text-align: center; font-weight: 900; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000; position: relative; }
 
-        body { 
-            font-family: 'Segoe UI', system-ui, sans-serif; background: var(--fundo); 
-            color: var(--texto); margin: 0; padding-bottom: 100px; overflow: hidden; height: 100vh; transition: 0.3s;
-        }
-
-        header { 
-            background: var(--amarelo); color: #000; padding: 15px; text-align: center; 
-            font-weight: 900; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000;
-        }
-
-        .content { height: calc(100vh - 140px); overflow-y: auto; scroll-behavior: smooth; }
-        .page { display: none; padding: 20px; animation: fadeIn 0.3s ease; }
+        .content { height: calc(100vh - 140px); overflow-y: auto; }
+        .page { display: none; padding: 20px; animation: fadeIn 0.3s ease; box-sizing: border-box; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTÕES 3D PROFISSIONAIS */
+        /* PADRONIZAÇÃO DE BOTÕES - TODAS AS BORDAS IGUAIS */
         .btn { 
-            display: flex; align-items: center; justify-content: center; gap: 10px; 
-            padding: var(--padding-base); border: none; border-radius: 20px; 
-            font-size: var(--fonte-base); font-weight: 800; color: white; 
-            text-decoration: none; margin-bottom: 15px; width: 100%; 
-            background: var(--card); box-shadow: 0 6px 12px rgba(0,0,0,0.4); cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; 
+            padding: 20px; border: none; border-radius: 20px; font-size: 16px; font-weight: 700; 
+            color: white; text-decoration: none; margin-bottom: 15px; width: 100%;
+            background: var(--card); box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
+            cursor: pointer; box-sizing: border-box; transition: 0.2s;
         }
-        .btn:active { transform: translateY(3px); box-shadow: 0 2px 5px rgba(0,0,0,0.4); }
-        .emergencia { background: linear-gradient(145deg, #ff4d4d, #d90429); }
+        .btn:active { transform: scale(0.98); }
+        
+        /* CORES PADRONIZADAS SEM BORDAS EXTRAS */
+        .emergencia { background: #d90429; }
+        .zap { background: #25d366; }
+        .btn-idoso { padding: 40px; font-size: 24px; background: #3498db; }
 
         /* FORMULÁRIO */
-        input, textarea { 
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #444; 
-            background: #222; color: white; margin-bottom: 15px; box-sizing: border-box; 
+        input, textarea, select { 
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; 
+            border: 1px solid #333; background: #252525; color: white; box-sizing: border-box;
         }
 
         /* MENU INFERIOR */
-        nav { 
-            position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a1a; 
-            display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000;
-        }
-        nav button { background: none; border: none; color: #666; font-size: 11px; font-weight: bold; display: flex; flex-direction: column; align-items: center; }
+        nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; }
+        nav button { background: none; border: none; color: #666; font-size: 10px; display: flex; flex-direction: column; align-items: center; }
         nav button.active-nav { color: var(--amarelo); }
-        .nav-icon { font-size: 24px; margin-bottom: 4px; }
+        .nav-icon { font-size: 22px; margin-bottom: 4px; }
     </style>
 </head>
 <body>
@@ -61,59 +52,54 @@
     <header>EMERGÊNCIA TRANSITAL PRO</header>
 
     <div class="content">
-        <!-- PÁGINA 1: INÍCIO (EMERGÊNCIA) -->
+        <!-- PÁGINA 1: INÍCIO -->
         <div id="home" class="page active">
-            <h2 style="text-align: center; color: var(--amarelo);">🆘 Socorro Rápido</h2>
+            <h3 style="text-align:center;">Socorro Rápido</h3>
             <a href="tel:191" class="btn emergencia">🚨 LIGAR POLÍCIA (191)</a>
             <a href="tel:193" class="btn emergencia" style="background: #b91c1c;">🚑 BOMBEIROS (193)</a>
-            <button onclick="enviarZap()" class="btn" style="background:#25d366;">📍 LOCALIZAÇÃO (ZAP)</button>
+            <button onclick="enviarZap()" class="btn zap">📍 LOCALIZAÇÃO (ZAP)</button>
         </div>
 
-        <!-- PÁGINA 2: MAPA -->
-        <div id="mapa" class="page" style="padding: 0; height: 100%;">
-            <div id="map-status" style="text-align:center; padding: 50px;">Buscando GPS... 🛰️</div>
-            <iframe id="google-maps" width="100%" height="100%" style="border:0; display:none;" allowfullscreen="" loading="lazy"></iframe>
+        <!-- PÁGINA 2: MODO IDOSO (BOTÕES GIGANTES) -->
+        <div id="idoso" class="page">
+            <h2 style="text-align:center; color:var(--amarelo);">Modo Acessível</h2>
+            <a href="tel:191" class="btn btn-idoso emergencia">📞 POLÍCIA</a>
+            <a href="tel:193" class="btn btn-idoso" style="background:#b91c1c;">🚑 BOMBEIROS</a>
+            <button onclick="enviarZap()" class="btn btn-idoso zap">🟢 ENVIAR ZAP</button>
         </div>
 
-        <!-- PÁGINA 3: RELATAR (FORMULÁRIO) -->
-        <div id="relatar" class="page">
-            <h2 style="color:var(--amarelo);">Relatar Ocorrência</h2>
-            <p style="font-size: 14px;">Avise sobre acidentes ou obras na sua região:</p>
-            <input type="text" id="local" placeholder="Ex: Av. Brasil - Próximo ao km 10">
-            <textarea id="descricao" rows="4" placeholder="O que aconteceu? (Ex: Animal na pista)"></textarea>
-            <button class="btn" style="background:var(--amarelo); color:#000;" onclick="salvarRelato()">ENVIAR ALERTA</button>
+        <!-- PÁGINA 3: MAPA -->
+        <div id="mapa" class="page" style="padding:0; height:100%;">
+            <iframe id="google-maps" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
 
-        <!-- PÁGINA 4: AJUSTES (MODO IDOSO) -->
-        <div id="ajustes" class="page">
-            <h2 style="text-align: center;">⚙️ Configurações</h2>
-            <button class="btn" style="background:#444;" onclick="toggleModoIdoso()" id="btn-idoso">
-                👵 ATIVAR MODO IDOSO
-            </button>
-            <div style="background: var(--card); padding: 15px; border-radius: 15px; margin-top: 20px; font-size: 14px; opacity: 0.8;">
-                <b>Sobre:</b> App profissional focado em salvar vidas e educar motoristas novatos.
-            </div>
+        <!-- PÁGINA 4: REPORTAR (FORMULÁRIO) -->
+        <div id="reportar" class="page">
+            <h3 style="color:var(--amarelo);">Relatar Problema</h3>
+            <p style="font-size:12px;">Sua informação ajuda outros motoristas.</p>
+            <select id="tipo-alerta">
+                <option value="Acidente">⚠️ Acidente</option>
+                <option value="Obras">🚧 Obras na Pista</option>
+                <option value="Animal">🐾 Animal na Via</option>
+            </select>
+            <textarea id="desc-alerta" placeholder="Descreva o que aconteceu..."></textarea>
+            <button onclick="enviarAlerta()" class="btn zap">ENVIAR ALERTA</button>
         </div>
     </div>
 
     <nav>
         <button onclick="showPage('home', this)" class="active-nav"><span class="nav-icon">🚨</span>Início</button>
+        <button onclick="showPage('idoso', this)"><span class="nav-icon">👴</span>Idoso</button>
         <button onclick="showPage('mapa', this)"><span class="nav-icon">🗺️</span>Mapa</button>
-        <button onclick="showPage('relatar', this)"><span class="nav-icon">📝</span>Relatar</button>
-        <button onclick="showPage('ajustes', this)"><span class="nav-icon">⚙️</span>Ajustes</button>
+        <button onclick="showPage('reportar', this)"><span class="nav-icon">📢</span>Alertar</button>
     </nav>
 
     <script>
         let lat, lon;
-
-        // GPS e Mapa Inteligente
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(p => {
                 lat = p.coords.latitude; lon = p.coords.longitude;
-                const mapFrame = document.getElementById('google-maps');
-                mapFrame.src = `https://www.google.com{lat},${lon}&z=15&output=embed`;
-                mapFrame.style.display = "block";
-                document.getElementById('map-status').style.display = "none";
+                document.getElementById('google-maps').src = `https://www.google.com{lat},${lon}&z=15&output=embed`;
             });
         }
 
@@ -124,28 +110,16 @@
             b.classList.add('active-nav');
         }
 
-        function toggleModoIdoso() {
-            document.body.classList.toggle('modo-idoso');
-            const btn = document.getElementById('btn-idoso');
-            btn.innerText = document.body.classList.contains('modo-idoso') ? "👦 VOLTAR AO NORMAL" : "👵 ATIVAR MODO IDOSO";
-        }
-
-        function salvarRelato() {
-            const local = document.getElementById('local').value;
-            const desc = document.getElementById('descricao').value;
-            if(local && desc) {
-                alert("Obrigado! Seu relato foi enviado para nossa central e aparecerá nos alertas em breve.");
-                document.getElementById('local').value = "";
-                document.getElementById('descricao').value = "";
-                showPage('home', document.querySelector('nav button'));
-            } else { alert("Preencha todos os campos."); }
-        }
-
         function enviarZap() {
-            if(lat) {
-                const url = `https://wa.me🚨 EMERGÊNCIA! Minha localização: https://www.google.com{lat},${lon}`;
-                window.open(url, '_blank');
-            } else { alert("Aguarde o sinal do GPS..."); }
+            if(lat) window.location.href = `https://wa.me! Minha localização: https://www.google.com{lat},${lon}`;
+            else alert("Aguarde o GPS...");
+        }
+
+        function enviarAlerta() {
+            const tipo = document.getElementById('tipo-alerta').value;
+            const desc = document.getElementById('desc-alerta').value;
+            alert(`Alerta de ${tipo} enviado com sucesso! Obrigado por colaborar.`);
+            document.getElementById('desc-alerta').value = "";
         }
     </script>
 </body>
