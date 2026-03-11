@@ -6,7 +6,7 @@
     <title>Emergência Transital PRO</title>
     <style>
         :root { 
-            --amarelo: #ffcc00; --vermelho: #ff4d4d; --verde: #2ecc71; 
+            --amarelo: #ffcc00; --vermelho: #d90429; --verde: #2ecc71; 
             --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
         }
 
@@ -19,30 +19,32 @@
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* PADRONIZAÇÃO DE BOTÕES - TODAS AS BORDAS IGUAIS */
-        .btn { 
-            display: flex; align-items: center; justify-content: center; gap: 12px; 
-            padding: 20px; border: none; border-radius: 20px; font-size: 16px; font-weight: 700; 
-            color: white; text-decoration: none; margin-bottom: 15px; width: 100%;
-            background: var(--card); box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
-            cursor: pointer; box-sizing: border-box; transition: 0.2s;
+        /* BOTÕES PADRONIZADOS */
+        .btn-base { 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            border: none; border-radius: 20px; font-weight: 700; color: white; 
+            text-decoration: none; width: 100%; box-sizing: border-box;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4); cursor: pointer; transition: 0.2s;
+            margin-bottom: 15px;
         }
-        .btn:active { transform: scale(0.98); }
+        .btn-base:active { transform: scale(0.98); }
         
-        /* CORES PADRONIZADAS SEM BORDAS EXTRAS */
-        .emergencia { background: #d90429; }
-        .zap { background: #25d366; }
-        .btn-idoso { padding: 40px; font-size: 24px; background: #3498db; }
+        .btn-inicio { padding: 25px 10px; font-size: 14px; flex-direction: column; margin-bottom: 0; }
+        .btn-idoso { padding: 45px 20px; font-size: 26px; }
 
-        /* FORMULÁRIO */
-        input, textarea, select { 
-            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; 
-            border: 1px solid #333; background: #252525; color: white; box-sizing: border-box;
-        }
+        /* Cores */
+        .bg-vermelho { background: var(--vermelho); }
+        .bg-verde { background: var(--verde); }
+        .bg-azul { background: #3498db; }
+        .bg-laranja { background: #f39c12; }
+        .bg-rosa { background: #e91e63; }
+
+        /* Formulários */
+        input, textarea, select { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid #333; background: #252525; color: white; box-sizing: border-box; font-size: 16px; }
 
         /* MENU INFERIOR */
         nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a1a; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; }
-        nav button { background: none; border: none; color: #666; font-size: 10px; display: flex; flex-direction: column; align-items: center; }
+        nav button { background: none; border: none; color: #666; font-size: 10px; display: flex; flex-direction: column; align-items: center; outline: none; }
         nav button.active-nav { color: var(--amarelo); }
         .nav-icon { font-size: 22px; margin-bottom: 4px; }
     </style>
@@ -54,44 +56,52 @@
     <div class="content">
         <!-- PÁGINA 1: INÍCIO -->
         <div id="home" class="page active">
-            <h3 style="text-align:center;">Socorro Rápido</h3>
-            <a href="tel:191" class="btn emergencia">🚨 LIGAR POLÍCIA (191)</a>
-            <a href="tel:193" class="btn emergencia" style="background: #b91c1c;">🚑 BOMBEIROS (193)</a>
-            <button onclick="enviarZap()" class="btn zap">📍 LOCALIZAÇÃO (ZAP)</button>
+            <h3 style="text-align:center; margin-bottom: 20px;">Painel de Emergência</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <a href="tel:191" class="btn-base btn-inicio bg-vermelho"><span>🚨</span> POLÍCIA (191)</a>
+                <a href="tel:193" class="btn-base btn-inicio bg-vermelho" style="background:#b91c1c;"><span>🚑</span> BOMBEIROS</a>
+                <button onclick="enviarZap()" class="btn-base btn-inicio bg-verde"><span>📍</span> ENVIAR ZAP</button>
+                <button onclick="showPage('familia', document.getElementById('nav-familia'))" class="btn-base btn-inicio bg-rosa"><span>❤️</span> FAMÍLIA</button>
+            </div>
+            <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base bg-azul" style="margin-top: 20px; padding: 20px;">🗺️ VER MAPA EM TEMPO REAL</button>
         </div>
 
-        <!-- PÁGINA 2: MODO IDOSO (BOTÕES GIGANTES) -->
+        <!-- PÁGINA 2: MODO IDOSO -->
         <div id="idoso" class="page">
-            <h2 style="text-align:center; color:var(--amarelo);">Modo Acessível</h2>
-            <a href="tel:191" class="btn btn-idoso emergencia">📞 POLÍCIA</a>
-            <a href="tel:193" class="btn btn-idoso" style="background:#b91c1c;">🚑 BOMBEIROS</a>
-            <button onclick="enviarZap()" class="btn btn-idoso zap">🟢 ENVIAR ZAP</button>
+            <h2 style="text-align:center; color:var(--amarelo); margin-bottom:25px;">MODO FÁCIL</h2>
+            <a href="tel:191" class="btn-base btn-idoso bg-vermelho">📞 LIGAR POLÍCIA</a>
+            <button id="btn-call-familia-idoso" onclick="ligarFamilia()" class="btn-base btn-idoso bg-rosa">❤️ LIGAR FILHO(A)</button>
+            <button onclick="enviarZap()" class="btn-base btn-idoso bg-verde">🟢 MANDAR ZAP</button>
         </div>
 
-        <!-- PÁGINA 3: MAPA -->
+        <!-- PÁGINA 3: FAMÍLIA (CONTATO DE EMERGÊNCIA) -->
+        <div id="familia" class="page">
+            <h2 style="color:var(--amarelo); text-align:center;">Contato de Emergência</h2>
+            <div style="background:#252525; padding:20px; border-radius:20px; border:1px solid #444;">
+                <p style="font-size:14px; margin-top:0;">Salve o contato de um parente próximo:</p>
+                <input type="text" id="nome-familia" placeholder="Nome (ex: Filho João)">
+                <input type="tel" id="tel-familia" placeholder="Telefone com DDD">
+                <button onclick="salvarFamilia()" class="btn-base bg-verde" style="padding:15px; margin-bottom:0;">💾 SALVAR CONTATO</button>
+            </div>
+            <div id="contato-salvo" style="margin-top:25px; display:none;">
+                <p style="text-align:center;">Contato Atual:</p>
+                <button onclick="ligarFamilia()" class="btn-base bg-rosa" style="padding:25px;">
+                    <span id="display-nome">Ligar</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PÁGINA 4: MAPA -->
         <div id="mapa" class="page" style="padding:0; height:100%;">
             <iframe id="google-maps" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-
-        <!-- PÁGINA 4: REPORTAR (FORMULÁRIO) -->
-        <div id="reportar" class="page">
-            <h3 style="color:var(--amarelo);">Relatar Problema</h3>
-            <p style="font-size:12px;">Sua informação ajuda outros motoristas.</p>
-            <select id="tipo-alerta">
-                <option value="Acidente">⚠️ Acidente</option>
-                <option value="Obras">🚧 Obras na Pista</option>
-                <option value="Animal">🐾 Animal na Via</option>
-            </select>
-            <textarea id="desc-alerta" placeholder="Descreva o que aconteceu..."></textarea>
-            <button onclick="enviarAlerta()" class="btn zap">ENVIAR ALERTA</button>
         </div>
     </div>
 
     <nav>
         <button onclick="showPage('home', this)" class="active-nav"><span class="nav-icon">🚨</span>Início</button>
         <button onclick="showPage('idoso', this)"><span class="nav-icon">👴</span>Idoso</button>
-        <button onclick="showPage('mapa', this)"><span class="nav-icon">🗺️</span>Mapa</button>
-        <button onclick="showPage('reportar', this)"><span class="nav-icon">📢</span>Alertar</button>
+        <button id="nav-familia" onclick="showPage('familia', this)"><span class="nav-icon">❤️</span>Família</button>
+        <button id="nav-mapa" onclick="showPage('mapa', this)"><span class="nav-icon">🗺️</span>Mapa</button>
     </nav>
 
     <script>
@@ -103,6 +113,37 @@
             });
         }
 
+        // FUNÇÕES FAMÍLIA
+        function salvarFamilia() {
+            const nome = document.getElementById('nome-familia').value;
+            const tel = document.getElementById('tel-familia').value;
+            if(nome && tel) {
+                localStorage.setItem('ice_nome', nome);
+                localStorage.setItem('ice_tel', tel);
+                alert("Contato de Emergência salvo!");
+                carregarFamilia();
+            } else { alert("Preencha nome e telefone."); }
+        }
+
+        function carregarFamilia() {
+            const nome = localStorage.getItem('ice_nome');
+            const tel = localStorage.getItem('ice_tel');
+            if(nome && tel) {
+                document.getElementById('contato-salvo').style.display = 'block';
+                document.getElementById('display-nome').innerText = `📞 Ligar para ${nome}`;
+                document.getElementById('btn-call-familia-idoso').innerText = `❤️ LIGAR ${nome.toUpperCase()}`;
+            }
+        }
+
+        function ligarFamilia() {
+            const tel = localStorage.getItem('ice_tel');
+            if(tel) window.location.href = `tel:${tel}`;
+            else { 
+                alert("Nenhum contato salvo. Vá na aba Família ❤️");
+                showPage('familia', document.getElementById('nav-familia'));
+            }
+        }
+
         function showPage(pId, b) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pId).classList.add('active');
@@ -112,15 +153,10 @@
 
         function enviarZap() {
             if(lat) window.location.href = `https://wa.me! Minha localização: https://www.google.com{lat},${lon}`;
-            else alert("Aguarde o GPS...");
+            else alert("Aguarde o GPS carregar...");
         }
 
-        function enviarAlerta() {
-            const tipo = document.getElementById('tipo-alerta').value;
-            const desc = document.getElementById('desc-alerta').value;
-            alert(`Alerta de ${tipo} enviado com sucesso! Obrigado por colaborar.`);
-            document.getElementById('desc-alerta').value = "";
-        }
+        window.onload = carregarFamilia;
     </script>
 </body>
 </html>
