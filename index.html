@@ -166,10 +166,22 @@
         }
 
         function enviarZap() {
-            const tel = localStorage.getItem('ice_tel');
-            if(!tel) { alert("Salve um contato primeiro!"); return; }
-            const msg = `🚨 EMERGÊNCIA! Minha localização: https://www.google.com{lat},${lon}`;
-            window.open(`https://wa.me{tel}?text=${encodeURIComponent(msg)}`, '_blank');
+    const tel = localStorage.getItem('ice_tel');
+    if(!tel) {
+        alert("Salve um contato primeiro!");
+        return;
+    }
+    
+    // Remove qualquer caractere que não seja número
+    const numLimpo = tel.replace(/\D/g, '');
+    const msg = `🚨 EMERGÊNCIA! Preciso de ajuda. Minha localização: https://www.google.com{lat},${lon}`;
+    
+    // Link que funciona melhor em ambos (Celular e PC)
+    const url = `https://api.whatsapp.com{numLimpo}&text=${encodeURIComponent(msg)}`;
+    
+    window.open(url, '_blank');
+}
+
         }
 
         // FUNÇÕES DA CÂMERA (MOCKUP)
