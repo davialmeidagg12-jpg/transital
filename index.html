@@ -89,7 +89,7 @@
     </div>
 </header>
 
-    <header>EMERGÊNCIA TRANSITAL PRO</header>
+   
 
     <div class="content">
      <!-- PÁGINA 1: INÍCIO -->
@@ -101,7 +101,10 @@
         <a href="tel:193" class="btn-base bg-vermelho" style="background:#b91c1c; padding: 20px 10px; flex-direction: column;"><span>🚑</span> BOMBEIROS</a>
         <button onclick="enviarZap()" class="btn-base bg-verde" style="padding: 20px 10px; flex-direction: column;"><span>📍</span> MANDAR ZAP</button>
         <button onclick="showPage('camera', document.getElementById('nav-camera'))" class="btn-base bg-roxo" style="padding: 20px 10px; flex-direction: column;"><span>📷</span> LER PLACA</button>
-        
+        <button onclick="tocarSirene()" class="btn-base" style="background:#000; grid-column: span 2; padding: 15px; margin-top: 10px; border: 2px solid var(--vermelho);">
+    <span>🔊</span> ATIVAR SIRENE DE EMERGÊNCIA
+</button>
+
         <!-- BOTÃO MAPA LARGO -->
         <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base bg-azul" style="grid-column: span 2; padding: 18px; flex-direction: row; gap: 15px; margin-top: 5px;">
             <span>🗺️</span> VER MAPA E TRÂNSITO
