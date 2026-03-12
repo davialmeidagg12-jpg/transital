@@ -101,29 +101,22 @@
         <button onclick="tocarSirene()" class="btn-base" style="background:#000; grid-column: span 2; padding: 15px; margin-top: 10px; border: 2px solid var(--vermelho);">
     <span>🔊</span> ATIVAR SIRENE DE EMERGÊNCIA
 </button>
-
-        <!-- BOTÃO MAPA LARGO -->
+     <!-- BOTÃO MAPA LARGO -->
        <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base" 
-        style="grid-column: span 2; background: #2980b9 !important; color: white !important; padding: 20px; margin-top: 10px; flex-direction: row; gap: 15px; border: none;">
-    <span>🗺️</span> <b>VER MAPA E TRÂNSITO</b>
-</button>
-
-</button>
-
+              <!-- BOTÃO MAPA -->
+        <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base" style="grid-column: span 2; background: #2980b9 !important; color: white !important; padding: 20px; margin-top: 10px; flex-direction: row; gap: 15px; border: none;">
+            <span>🗺️</span> <b>VER MAPA E TRÂNSITO</b>
         </button>
-    </div>
+    </div> <!-- Fecha a grid da linha 106 -->
+</div> <!-- Fecha a home da linha 103 -->
+
+<!-- PÁGINA 2: IDOSO -->
+<div id="idoso" class="page">
+    <a href="tel:191" class="btn-base btn-idoso bg-vermelho"><span>🚨</span> POLÍCIA</a>
+    <button onclick="ligarFamilia()" class="btn-base btn-idoso bg-rosa"><span>❤️</span> FAMÍLIA</button>
+    <button onclick="enviarZap()" class="btn-base btn-idoso bg-verde"><span>📍</span> MANDAR ZAP</button>
 </div>
 
-        <div id="idoso" class="page">
-            <a href="tel:191" class="btn-base btn-idoso bg-vermelho">📞 POLÍCIA</a>
-            <button onclick="ligarFamilia()" class="btn-base btn-idoso bg-rosa">❤️ FAMÍLIA</button>
-            <button onclick="enviarZap()" class="btn-base btn-idoso bg-verde">🟢 MANDAR ZAP</button>
-        </div>
-
-        <!-- PÁGINA 3: FAMÍLIA -->
-        <div id="familia" class="page">
-            <h3 style="color:var(--amarelo); text-align:center;">Contato de Emergência</h3>
-            <input type="text" id="nome-familia" placeholder="Nome do Parente">
             <input type="tel" id="tel-familia" placeholder="DDD + Número">
             <button onclick="salvarFamilia()" class="btn-base bg-verde" style="padding:15px;">💾 SALVAR</button>
             <div id="contato-salvo" style="margin-top:20px; display:none; text-align:center;">
