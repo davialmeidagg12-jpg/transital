@@ -158,13 +158,24 @@
         let lat = 0, lon = 0, scanner = null;
 
 // Tenta pegar localização
+// PEGAR LOCALIZAÇÃO E CARREGAR MAPA COM TRÂNSITO
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(p => {
-        lat = p.coords.latitude; lon = p.coords.longitude;
-        const map = document.getElementById('google-maps');
-        if(map) map.src = `https://maps.google.com{lat},${lon}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-    }, (err) => console.log("GPS desativado"));
+        lat = p.coords.latitude; 
+        lon = p.coords.longitude;
+        
+        // Este link abaixo ativa a camada de TRÂNSITO (layer=t)
+        const mapUrl = `https://maps.google.com{lat},${lon}&layer=t&t=m&z=15&output=embed`;
+        
+        const mapElement = document.getElementById('google-maps');
+        if(mapElement) {
+            mapElement.src = mapUrl;
+        }
+    }, (err) => {
+        console.log("Erro de GPS: ", err);
+    });
 }
+
 
 // FUNÇÃO QUE DESTRAVA AS PÁGINAS
 function showPage(pId, btn) {
