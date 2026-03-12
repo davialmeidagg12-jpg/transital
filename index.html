@@ -213,6 +213,44 @@ function salvarFamilia() {
         document.getElementById('contato-salvo').style.display = 'block';
     }
 }
+// --- CÓDIGO DA CÂMERA ---
+
+function startScan() {
+    // 1. Cria o leitor no quadrado "reader"
+    scanner = new Html5Qrcode("reader");
+    
+    const config = { 
+        fps: 10, 
+        qrbox: { width: 250, height: 250 },
+        aspectRatio: 1.0 
+    };
+
+    // 2. Tenta abrir a câmera de trás
+    scanner.start({ facingMode: "environment" }, config, (txt) => {
+        // Se ler algo, mostra o resultado na tela
+        document.getElementById('res-scan').style.display = 'block';
+        document.getElementById('pl-nome').innerText = "Identificado!";
+        document.getElementById('pl-desc').innerText = "Conteúdo: " + txt;
+        
+        stopScan(); // Desliga a câmera após a leitura
+    }).catch(err => {
+        console.error("Erro na câmera: ", err);
+        alert("⚠️ Ative a permissão da câmera no navegador!");
+    });
+}
+
+function stopScan() {
+    if(scanner) {
+        scanner.stop().then(() => {
+            document.getElementById('reader').innerHTML = ""; 
+        }).catch(err => console.log("Erro ao parar", err));
+    }
+}
+
+function restartScan() {
+    document.getElementById('res-scan').style.display = 'none';
+    startScan();
+}
 
 // Garante que o app comece na Home
 window.onload = () => {
