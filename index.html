@@ -7,38 +7,77 @@
     <!-- Biblioteca do Scanner -->
     <script src="https://unpkg.com"></script>
     <style>
-        :root { 
-            --amarelo: #ffcc00; --vermelho: #d90429; --verde: #2ecc71; 
-            --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
-        }
+    :root { 
+        --amarelo: #ffcc00; --vermelho: #d90429; --verde: #2ecc71; 
+        --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
+    }
 
-        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 100px; overflow: hidden; height: 100vh; }
-        
-        header { background: var(--amarelo); color: #000; padding: 15px; text-align: center; font-weight: 900; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000; position: relative; }
+    body { 
+        font-family: 'Segoe UI', Roboto, sans-serif; 
+        background: var(--fundo); color: var(--texto); 
+        margin: 0; padding-bottom: 80px; overflow-x: hidden; 
+    }
+    
+    header { 
+        background: var(--amarelo); color: #000; padding: 15px; 
+        text-align: center; font-weight: 900; font-size: 18px; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 1000;
+    }
 
-        .content { height: calc(100vh - 140px); overflow-y: auto; }
-        .page { display: none; padding: 20px; animation: fadeIn 0.3s ease; box-sizing: border-box; }
-        .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .content { padding: 15px; }
+    .page { display: none; animation: fadeIn 0.3s ease; }
+    .active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* BOTÕES PADRONIZADOS */
-        .btn-base { 
-            display: flex; align-items: center; justify-content: center; gap: 10px; 
-            border: none; border-radius: 20px; font-weight: 700; color: white; 
-            text-decoration: none; width: 100%; box-sizing: border-box;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4); cursor: pointer; transition: 0.2s;
-            margin-bottom: 15px;
-        }
-        .btn-base:active { transform: scale(0.98); }
-        .btn-inicio { padding: 20px 10px; font-size: 12px; flex-direction: column; margin-bottom: 0; }
-        .btn-idoso { padding: 40px 20px; font-size: 24px; }
+    /* BOTÕES DA HOME (GRID) */
+    .grid-botoes { 
+        display: grid; 
+        grid-template-columns: 1fr 1fr; 
+        gap: 15px; 
+        margin-top: 10px;
+    }
 
-        /* Cores */
-        .bg-vermelho { background: var(--vermelho); }
-        .bg-verde { background: var(--verde); }
-        .bg-azul { background: #3498db; }
-        .bg-rosa { background: #e91e63; }
-        .bg-roxo { background: #9b59b6; }
+    .btn-base { 
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 8px; border: none; border-radius: 15px; font-weight: 700; color: white; 
+        text-decoration: none; padding: 20px 10px; cursor: pointer; transition: 0.2s;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3); font-size: 13px;
+    }
+
+    .btn-base:active { transform: scale(0.95); opacity: 0.8; }
+    .btn-base span { font-size: 28px; } /* Tamanho do Emoji */
+
+    /* Botão de Mapa (Largo) */
+    .btn-largo { 
+        grid-column: span 2; margin-top: 5px; padding: 18px;
+        background: #3498db; flex-direction: row; font-size: 16px;
+    }
+
+    /* Cores dos Botões */
+    .bg-vermelho { background: var(--vermelho); }
+    .bg-verde { background: var(--verde); }
+    .bg-roxo { background: #9b59b6; }
+    .bg-rosa { background: #e91e63; }
+
+    /* MENU INFERIOR */
+    nav { 
+        position: fixed; bottom: 0; left: 0; right: 0; 
+        background: #1a1a1a; display: flex; justify-content: space-around; 
+        padding: 12px 0; border-top: 1px solid #333; z-index: 1000; 
+    }
+    nav button { 
+        background: none; border: none; color: #777; font-size: 11px; 
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    nav button.active-nav { color: var(--amarelo); font-weight: bold; }
+    .nav-icon { font-size: 22px; }
+
+    /* INPUTS */
+    input { 
+        width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 10px; 
+        border: 1px solid #444; background: #222; color: white; box-sizing: border-box; 
+    }
+</style>
 
         /* Scanner */
         #reader { width: 100% !important; border-radius: 20px; overflow: hidden; border: 2px solid var(--amarelo); }
