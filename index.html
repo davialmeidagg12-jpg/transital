@@ -163,13 +163,12 @@ if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(p => {
         lat = p.coords.latitude; 
         lon = p.coords.longitude;
-        
-        // Este link abaixo ativa a camada de TRÂNSITO (layer=t)
+        // USE EXATAMENTE ESTE LINK COM CRASE:
         const mapUrl = `https://maps.google.com{lat},${lon}&layer=t&t=m&z=15&output=embed`;
-        
-        const mapElement = document.getElementById('google-maps');
-        if(mapElement) {
-            mapElement.src = mapUrl;
+        document.getElementById('google-maps').src = mapUrl;
+    });
+}
+
         }
     }, (err) => {
         console.log("Erro de GPS: ", err);
