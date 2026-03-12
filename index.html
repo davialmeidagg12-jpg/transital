@@ -127,103 +127,55 @@
     </nav>
 
     <script>
-        let lat, lon, scanner;
+        let lat = 0, lon = 0, scanner = null;
 
-        // PEGAR LOCALIZAÇÃO E CARREGAR MAPA
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(p => {
-                lat = p.coords.latitude; 
-                lon = p.coords.longitude;
-                document.getElementById('google-maps').src = `https://maps.google.com{lat},${lon}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-            });
-        }
-
-        // NAVEGAÇÃO
-        function showPage(pId, b) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pId).classList.add('active');
-            document.querySelectorAll('nav button').forEach(n => n.classList.remove('active-nav'));
-            b.classList.add('active-nav');
-            if(pId === 'camera') startScan(); else stopScan();
-        }
-
-        // SALVAR FAMÍLIA
-        function salvarFamilia() {
-            const nome = document.getElementById('nome-familia').value;
-            const tel = document.getElementById('tel-familia').value;
-            if(nome && tel) {
-                localStorage.setItem('ice_nome', nome);
-                localStorage.setItem('ice_tel', tel);
-                alert("✅ Contato Salvo!");
-                document.getElementById('contato-salvo').style.display = 'block';
-            }
-        }
-
-        function ligarFamilia() {
-            const tel = localStorage.getItem('ice_tel');
-            if(tel) window.location.href = `tel:${tel}`;
-            else alert("Nenhum número salvo!");
-        }
-
-        function enviarZap() {
-    let tel = localStorage.getItem('ice_tel');
-    if(!tel) {
-        alert("⚠️ Vá na aba 'Família' e salve um número primeiro!");
-        showPage('familia', document.querySelector('nav button:nth-child(3)'));
-        return;
-    }
-    
-    // Remove parênteses, espaços e traços: (11) 99999-8888 -> 11999998888
-    const numLimpo = tel.replace(/\D/g, '');
-    
-    // Se o usuário esqueceu o 55, a gente coloca
-    const linkZap = numLimpo.startsWith('55') ? numLimpo : '55' + numLimpo;
-    
-    const msg = `🚨 *EMERGÊNCIA TRANSITAL!* \nPreciso de ajuda urgente.\nMinha localização: https://www.google.com{lat},${lon}`;
-    
-    window.open(`https://api.whatsapp.com{linkZap}&text=${encodeURIComponent(msg)}`, '_blank');
+// Tenta pegar localização
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(p => {
+        lat = p.coords.latitude; lon = p.coords.longitude;
+        const map = document.getElementById('google-maps');
+        if(map) map.src = `https://maps.google.com{lat},${lon}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    }, (err) => console.log("GPS desativado"));
 }
 
+// FUNÇÃO QUE DESTRAVA AS PÁGINAS
+function showPage(pId, btn) {
+    // Esconde todas
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    // Mostra a correta
+    const target = document.getElementById(pId);
+    if(target) target.style.display = 'block';
+
+    // Estilo do menu
+    document.querySelectorAll('nav button').forEach(n => n.style.color = '#666');
+    if(btn) btn.style.color = '#ffcc00';
+
+    // Para a câmera se sair da aba
+    if(pId !== 'camera' && scanner) {
+        scanner.stop().catch(() => null);
     }
-    
-    // Remove qualquer caractere que não seja número
-    const numLimpo = tel.replace(/\D/g, '');
-    const msg = `🚨 EMERGÊNCIA! Preciso de ajuda. Minha localização: https://www.google.com{lat},${lon}`;
-    
-    // Link que funciona melhor em ambos (Celular e PC)
-    const url = `https://api.whatsapp.com{numLimpo}&text=${encodeURIComponent(msg)}`;
-    
-    window.open(url, '_blank');
 }
 
-        }
+function enviarZap() {
+    const tel = localStorage.getItem('ice_tel');
+    if(!tel) return alert("Salve um contato na aba Família!");
+    const msg = encodeURIComponent(`🚨 EMERGÊNCIA! Localização: https://www.google.com{lat},${lon}`);
+    window.open(`https://wa.me{tel.replace(/\D/g,'')}?text=${msg}`, '_blank');
+}
 
-        // FUNÇÕES DA CÂMERA (MOCKUP)
-                function startScan() {
-            scanner = new Html5Qrcode("reader");
-            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-            
-            scanner.start({ facingMode: "environment" }, config, (txt) => {
-                document.getElementById('res-scan').style.display = 'block';
-                document.getElementById('pl-nome').innerText = "Placa / QR Detectado";
-                document.getElementById('pl-desc').innerText = "Conteúdo: " + txt;
-                stopScan();
-            }).catch(err => console.error("Erro na câmera", err));
-        }
+function salvarFamilia() {
+    const n = document.getElementById('nome-familia').value;
+    const t = document.getElementById('tel-familia').value;
+    if(n && t) {
+        localStorage.setItem('ice_nome', n);
+        localStorage.setItem('ice_tel', t);
+        alert("✅ Salvo com sucesso!");
+        document.getElementById('contato-salvo').style.display = 'block';
+    }
+}
 
-        function stopScan() {
-            if(scanner) {
-                scanner.stop().then(() => {
-                    document.getElementById('reader').innerHTML = "";
-                }).catch(err => console.log("Erro ao parar", err));
-            }
-        }
-
-
-        // CHECAR SE JÁ TEM CONTATO AO ABRIR
-        window.onload = () => {
-            if(localStorage.getItem('ice_tel')) document.getElementById('contato-salvo').style.display = 'block';
-        };
-    </script>
-</body>
-</html>
+// Garante que o app comece na Home
+window.onload = () => {
+    showPage('home', document.querySelector('nav button'));
+    if(localStorage.getItem('ice_tel')) document.getElementById('contato-salvo').style.display = 'block';
+};
