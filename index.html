@@ -166,10 +166,24 @@
         }
 
         function enviarZap() {
-    const tel = localStorage.getItem('ice_tel');
+    let tel = localStorage.getItem('ice_tel');
     if(!tel) {
-        alert("Salve um contato primeiro!");
+        alert("⚠️ Vá na aba 'Família' e salve um número primeiro!");
+        showPage('familia', document.querySelector('nav button:nth-child(3)'));
         return;
+    }
+    
+    // Remove parênteses, espaços e traços: (11) 99999-8888 -> 11999998888
+    const numLimpo = tel.replace(/\D/g, '');
+    
+    // Se o usuário esqueceu o 55, a gente coloca
+    const linkZap = numLimpo.startsWith('55') ? numLimpo : '55' + numLimpo;
+    
+    const msg = `🚨 *EMERGÊNCIA TRANSITAL!* \nPreciso de ajuda urgente.\nMinha localização: https://www.google.com{lat},${lon}`;
+    
+    window.open(`https://api.whatsapp.com{linkZap}&text=${encodeURIComponent(msg)}`, '_blank');
+}
+
     }
     
     // Remove qualquer caractere que não seja número
