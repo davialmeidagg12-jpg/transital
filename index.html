@@ -159,54 +159,71 @@
             alert("Detectado: " + decodedText);
         }).catch(err => { console.error(err); });
     }
+// BANCO DE DADOS REVISADO E CORRIGIDO
+const bancoPlacas = [
+    { p: "🛑", c: "Parada Obrigatória", o: ["Parada Obrigatória", "Pare se vier carro", "Dê a Preferência"] },
+    { p: "🚫", c: "Sentido Proibido", o: ["Sentido Proibido", "Entrada Permitida", "Não Entre"] },
+    { p: "⚠️", c: "Advertência Geral", o: ["Advertência Geral", "Atenção Obras", "Perigo à Frente"] },
+    { p: "🅿️", c: "Estacionamento Regulamentado", o: ["Estacionamento Regulamentado", "Proibido Estacionar", "Pare"] },
+    { p: "🚸", c: "Área Escolar", o: ["Área Escolar", "Crianças Brincando", "Passagem de Pedestres"] },
+    { p: "🚴", c: "Ciclistas", o: ["Passagem de Ciclistas", "Proibido Bicicletas", "Ciclovia"] },
+    { p: "⛽", c: "Posto de Combustível", o: ["Posto de Combustível", "Mecânico", "Serviços"] },
+    { p: "🔞", c: "Proibido menores de 18", o: ["Proibido menores de 18", "Velocidade Máxima", "Sentido Proibido"] },
+    { p: "🚶", c: "Trânsito de Pedestres", o: ["Trânsito de Pedestres", "Passagem Protegida", "Cuidado Crianças"] },
+    { p: "🐄", c: "Animais na Pista", o: ["Animais na Pista", "Cuidado Fazenda", "Animais Bravos"] },
+    { p: "🏥", c: "Hospital", o: ["Hospital", "Ambulância", "Pronto Socorro"] },
+    { p: "⛔", c: "Sentido Proibido de Circulação", o: ["Sentido Proibido de Circulação", "Pare", "Atenção"] },
+    { p: "↕️", c: "Sentido Duplo", o: ["Sentido Duplo", "Sentido Único", "Siga em Frente"] },
+    { p: "📶", c: "Área com Wi-fi", o: ["Área com Wi-fi", "Radar Eletrônico", "Torre de Celular"] },
+    { p: "🍴", c: "Restaurante", o: ["Restaurante", "Hotel", "Lanchonete"] },
+    { p: "🛤️", c: "Passagem de Nível", o: ["Passagem de Nível", "Ponte Estreita", "Cruzamento Ferroviário"] }
+];
 
-    const bancoPlacas = [
-        { p: "🛑", c: "Parada Obrigatória", o: ["Pare", "Parada Obrigatória", "Dê a Preferência"] },
-        { p: "🚫", c: "Sentido Proibido", o: ["Sentido Proibido", "Pare", "Não Entre"] },
-        { p: "🅿️", c: "Estacionamento Regulamentado", o: ["Pare", "Estacionamento", "Pátio"] },
-        { p: "🚸", c: "Área Escolar", o: ["Crianças", "Área Escolar", "Parque"] },
-        { p: "🚴", c: "Ciclistas", o: ["Ciclistas", "Proibido Bicicleta", "Ciclovia"] },
-        { p: "⛽", c: "Posto de Combustível", o: ["Posto", "Mecânico", "Comida"] },
-        { p: "⚠️", c: "Advertência Geral", o: ["Atenção", "Obras", "Perigo"] },
-        { p: "🔞", c: "Proibido menores de 18", o: ["Proibido menores", "Velocidade", "Sentido"] },
-        { p: "🚶", c: "Trânsito de Pedestres", o: ["Passagem", "Trânsito de Pedestres", "Cuidado"] },
-        { p: "🐄", c: "Animais na Pista", o: ["Fazenda", "Animais na Pista", "Animais"] },
-        { p: "🏥", c: "Hospital", o: ["Ambulância", "Hospital", "Farmácia"] },
-        { p: "⛔", c: "Sentido Proibido", o: ["Pare", "Sentido Proibido", "Atenção"] },
-        { p: "↕️", c: "Sentido Duplo", o: ["Único", "Duplo", "Pare"] },
-        { p: "📶", c: "Área com Wi-fi", o: ["Radar", "Wi-fi", "Celular"] },
-        { p: "🍴", c: "Restaurante", o: ["Hotel", "Cozinha", "Restaurante"] },
-        { p: "🛤️", c: "Passagem de Nível", o: ["Ponte", "Passagem de Nível", "Cruzamento"] }
-    ];
-    let qAtual = 0;
+let qAtual = 0;
 
-    function carregarPergunta() {
-        const item = bancoPlacas[qAtual];
-        document.getElementById('placa-img').innerText = item.p;
-        const opts = document.getElementById('opcoes');
-        opts.innerHTML = "";
+function carregarPergunta() {
+    const item = bancoPlacas[qAtual];
+    const placaImg = document.getElementById('placa-img');
+    const optsDiv = document.getElementById('opcoes');
+    
+    // Atualiza a imagem da placa
+    placaImg.innerText = item.p;
+    optsDiv.innerHTML = "";
+    
+    // Cria os botões de resposta
+    item.o.forEach(opcaoTexto => {
+        const btn = document.createElement('button');
+        btn.className = "opcao-btn";
+        btn.innerText = opcaoTexto;
         
-        const embaralhadas = [...item.o].sort(() => Math.random() - 0.5);
+        btn.onclick = () => {
+            // Desativa todos os botões para evitar cliques duplos
+            const todos = document.querySelectorAll('.opcao-btn');
+            todos.forEach(b => b.disabled = true);
 
-        embaralhadas.forEach(opt => {
-            const b = document.createElement('button');
-            b.className = "opcao-btn";
-            b.innerText = opt;
-            b.onclick = () => {
-                document.querySelectorAll('.opcao-btn').forEach(btn => btn.disabled = true);
-                if(opt === item.c) b.classList.add('correto');
-                else b.classList.add('errado');
-                setTimeout(() => { qAtual = (qAtual + 1) % bancoPlacas.length; carregarPergunta(); }, 1200);
-            };
-            opts.appendChild(b);
-        });
-        document.getElementById('quiz-status').innerText = `Placa ${qAtual + 1} de ${bancoPlacas.length}`;
-    }
+            // Verifica se o texto do botão clicado é IGUAL à resposta correta do banco
+            if(opcaoTexto === item.c) {
+                btn.classList.add('correto');
+            } else {
+                btn.classList.add('errado');
+                // Mostra qual era a correta para o usuário aprender
+                todos.forEach(b => {
+                    if(b.innerText === item.c) b.classList.add('correto');
+                });
+            }
 
-    function salvarFamilia() { localStorage.setItem('telFamilia', document.getElementById('tel-familia').value); alert('Número Salvo! ✅'); }
-    function ligarFamilia() { const n = localStorage.getItem('telFamilia'); if(n) window.location.href="tel:"+n; else alert('Salve um número!'); }
-    function enviarZap() { window.open("https://wa.me🚨 Preciso de ajuda!", "_blank"); }
-    function carregarMapa() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(p => { document.getElementById('google-maps').src = `https://maps.google.com{p.coords.latitude},${p.coords.longitude}&z=15&output=embed`; }); } }
+            // Espera um pouco e vai para a próxima
+            setTimeout(() => {
+                qAtual = (qAtual + 1) % bancoPlacas.length;
+                carregarPergunta();
+            }, 1500);
+        };
+        optsDiv.appendChild(btn);
+    });
+    
+    document.getElementById('quiz-status').innerText = `Placa ${qAtual + 1} de ${bancoPlacas.length}`;
+}
+
 </script>
 </body>
 </html>
