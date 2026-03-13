@@ -11,39 +11,59 @@
             --amarelo: #ffcc00; --vermelho: #d90429; --verde: #2ecc71; 
             --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
         }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 100px; display: flex; flex-direction: column; align-items: center; }
-        header { background: var(--amarelo); color: #000; padding: 15px; text-align: center; font-weight: 900; width: 100%; position: sticky; top: 0; z-index: 1000; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); 
+            margin: 0; padding-bottom: 110px; display: flex; flex-direction: column; align-items: center; 
+        }
+        header { 
+            background: var(--amarelo); color: #000; padding: 15px; text-align: center; 
+            font-weight: 900; width: 100%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
         .content { padding: 15px; width: 100%; max-width: 500px; box-sizing: border-box; }
         .page { display: none; animation: fadeIn 0.3s ease; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+
+        /* GRID DA HOME - CORRIGIDO */
+        .grid-home { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; /* Espaço garantido entre os botões */
+            margin-top: 10px;
+        }
 
         .btn-base { 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 8px; border: none; border-radius: 15px; font-weight: 800; color: white; 
-            min-height: 110px; padding: 10px; cursor: pointer; width: 100%; text-transform: uppercase; font-size: 11px;
+            gap: 10px; border: none; border-radius: 18px; font-weight: 800; color: white; 
+            min-height: 120px; padding: 15px 5px; cursor: pointer; width: 100%; 
+            text-transform: uppercase; font-size: 11px; box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            box-sizing: border-box;
         }
+        .btn-base:active { transform: scale(0.96); }
         .bg-vermelho { background: var(--vermelho); }
         .bg-verde { background: var(--verde); }
         .bg-roxo { background: #9b59b6; }
         .bg-azul { background: #2980b9; }
         .bg-rosa { background: #e91e63; }
-        .btn-base span { font-size: 35px; }
+        .btn-base span { font-size: 38px; }
 
         /* QUIZ */
         .quiz-container { background: #1e1e1e; padding: 20px; border-radius: 20px; text-align: center; border: 1px solid #333; }
-        .quiz-placa { font-size: 80px; margin: 15px 0; display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)); }
-        .opcao-btn { width: 100%; padding: 15px; margin: 8px 0; border-radius: 10px; border: 2px solid #333; background: #252525; color: white; font-weight: bold; cursor: pointer; }
+        .quiz-placa { font-size: 80px; margin: 15px 0; display: block; }
+        .opcao-btn { width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: 2px solid #333; background: #252525; color: white; font-weight: bold; cursor: pointer; }
         .correto { background: var(--verde) !important; border-color: white !important; }
         .errado { background: var(--vermelho) !important; border-color: white !important; }
 
         /* NAV */
-        nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; background: #1a1a1a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; z-index: 1000; }
+        nav { 
+            position: fixed; bottom: 0; width: 100%; max-width: 500px; background: #1a1a1a; 
+            display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #333; z-index: 1000; 
+        }
         nav button { background: none; border: none; color: #777; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         nav button.active-nav { color: var(--amarelo); font-weight: bold; }
-        .nav-icon { font-size: 20px; }
+        .nav-icon { font-size: 22px; }
 
-        input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box; }
+        input { width: 100%; padding: 18px; margin: 10px 0; border-radius: 12px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -54,16 +74,18 @@
     
     <!-- 1. INÍCIO -->
     <div id="home" class="page active">
-        <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid var(--amarelo);">
+        <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--amarelo);">
             <h3 style="margin:0; font-size: 14px; color: var(--amarelo);">PAINEL DE CONTROLE</h3>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        
+        <div class="grid-home">
             <a href="tel:191" class="btn-base bg-vermelho"><span>🚨</span> POLÍCIA</a>
             <a href="tel:193" class="btn-base bg-vermelho" style="background:#b91c1c;"><span>🚑</span> BOMBEIROS</a>
             <button onclick="enviarZap()" class="btn-base bg-verde"><span>📍</span> ZAP LOCAL</button>
             <button onclick="showPage('camera', document.getElementById('nav-camera'))" class="btn-base bg-roxo"><span>📷</span> SCANNER</button>
-            <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base bg-azul" style="grid-column: span 2; min-height: 80px; flex-direction: row; gap: 15px;">
-                <span>🗺️</span> <b>VER MAPA</b>
+            
+            <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base bg-azul" style="grid-column: span 2; min-height: 90px; flex-direction: row; gap: 15px;">
+                <span>🗺️</span> <b>VER MAPA E TRÂNSITO</b>
             </button>
         </div>
     </div>
@@ -71,12 +93,13 @@
     <!-- 2. IDOSO -->
     <div id="idoso" class="page">
         <div style="text-align: center; margin-bottom: 20px;"><span style="font-size: 40px;">👴</span><h2 style="color: var(--amarelo);">Modo Auxílio</h2></div>
-        <a href="tel:191" class="btn-base bg-vermelho" style="min-height: 140px; font-size: 18px; margin-bottom:15px; border: 3px solid white;"><span>🚨</span> LIGAR POLÍCIA</a>
-        <button onclick="ligarFamilia()" class="btn-base bg-rosa" style="min-height: 140px; font-size: 18px;"><span>❤️</span> CHAMAR FAMÍLIA</button>
+        <a href="tel:191" class="btn-base bg-vermelho" style="min-height: 150px; font-size: 18px; margin-bottom:15px; border: 3px solid white;"><span>🚨</span> LIGAR POLÍCIA</a>
+        <button onclick="ligarFamilia()" class="btn-base bg-rosa" style="min-height: 150px; font-size: 18px;"><span>❤️</span> CHAMAR FAMÍLIA</button>
+        
         <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-top: 20px;">
-            <p style="font-size: 12px; color: var(--amarelo);">Configurar Número da Família:</p>
+            <p style="font-size: 12px; color: var(--amarelo); margin-bottom: 10px;">Salvar Telefone da Família:</p>
             <input type="tel" id="tel-familia" placeholder="Ex: 11999998888">
-            <button onclick="salvarFamilia()" style="width: 100%; padding: 10px; background: var(--verde); border: none; color: white; font-weight: bold; border-radius: 8px;">SALVAR</button>
+            <button onclick="salvarFamilia()" style="width: 100%; padding: 12px; background: var(--verde); border: none; color: white; font-weight: bold; border-radius: 10px;">SALVAR NÚMERO</button>
         </div>
     </div>
 
@@ -94,8 +117,8 @@
     <!-- 4. CÂMERA -->
     <div id="camera" class="page">
         <h3 style="text-align:center; color: var(--amarelo);">SCANNER DE PLACA</h3>
-        <div id="reader" style="width: 100%; border-radius: 15px; overflow: hidden; background:#000; min-height: 300px;"></div>
-        <p style="font-size: 12px; text-align: center; color: #888; margin-top: 15px;">Aponte para uma placa ou QR Code para detectar.</p>
+        <div id="reader" style="width: 100%; border-radius: 20px; overflow: hidden; background:#000; min-height: 300px;"></div>
+        <p style="font-size: 12px; text-align: center; color: #888; margin-top: 15px;">Aponte para a placa para ler o código.</p>
     </div>
 
     <!-- 5. MAPA -->
@@ -134,25 +157,24 @@
         html5QrCode = new Html5Qrcode("reader");
         html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (decodedText) => {
             alert("Detectado: " + decodedText);
-        }).catch(err => { console.error("Câmera desligada ou erro: ", err); });
+        }).catch(err => { console.error(err); });
     }
 
-    // BANCO DE DADOS QUIZ (16 PERGUNTAS IMPORTANTES)
     const bancoPlacas = [
-        { p: "🛑", c: "Parada Obrigatória", o: ["Pare se vier carro", "Parada Obrigatória", "Dê a preferência"] },
+        { p: "🛑", c: "Parada Obrigatória", o: ["Pare", "Parada Obrigatória", "Dê a Preferência"] },
         { p: "🚫", c: "Sentido Proibido", o: ["Sentido Proibido", "Pare", "Não Entre"] },
-        { p: "🅿️", c: "Estacionamento Regulamentado", o: ["Pare", "Estacionamento Regulamentado", "Proibido Parar"] },
+        { p: "🅿️", c: "Estacionamento Regulamentado", o: ["Pare", "Estacionamento", "Pátio"] },
         { p: "🚸", c: "Área Escolar", o: ["Crianças", "Área Escolar", "Parque"] },
         { p: "🚴", c: "Ciclistas", o: ["Ciclistas", "Proibido Bicicleta", "Ciclovia"] },
         { p: "⛽", c: "Posto de Combustível", o: ["Posto", "Mecânico", "Comida"] },
-        { p: "⚠️", c: "Advertência Geral", o: ["Atenção", "Obras", "Advertência Geral"] },
-        { p: "🔞", c: "Proibido menores de 18", o: ["Proibido menores", "Velocidade Máxima", "Sentido Proibido"] },
-        { p: "🚶", c: "Trânsito de Pedestres", o: ["Passagem Protegida", "Trânsito de Pedestres", "Cuidado Crianças"] },
+        { p: "⚠️", c: "Advertência Geral", o: ["Atenção", "Obras", "Perigo"] },
+        { p: "🔞", c: "Proibido menores de 18", o: ["Proibido menores", "Velocidade", "Sentido"] },
+        { p: "🚶", c: "Trânsito de Pedestres", o: ["Passagem", "Trânsito de Pedestres", "Cuidado"] },
         { p: "🐄", c: "Animais na Pista", o: ["Fazenda", "Animais na Pista", "Animais"] },
         { p: "🏥", c: "Hospital", o: ["Ambulância", "Hospital", "Farmácia"] },
-        { p: "⛔", c: "Sentido Proibido de Circulação", o: ["Pare", "Sentido Proibido", "Atenção"] },
-        { p: "↕️", c: "Sentido Duplo", o: ["Sentido Único", "Sentido Duplo", "Pare"] },
-        { p: "📶", c: "Área com Wi-fi", o: ["Radar", "Área com Wi-fi", "Celular"] },
+        { p: "⛔", c: "Sentido Proibido", o: ["Pare", "Sentido Proibido", "Atenção"] },
+        { p: "↕️", c: "Sentido Duplo", o: ["Único", "Duplo", "Pare"] },
+        { p: "📶", c: "Área com Wi-fi", o: ["Radar", "Wi-fi", "Celular"] },
         { p: "🍴", c: "Restaurante", o: ["Hotel", "Cozinha", "Restaurante"] },
         { p: "🛤️", c: "Passagem de Nível", o: ["Ponte", "Passagem de Nível", "Cruzamento"] }
     ];
@@ -164,32 +186,26 @@
         const opts = document.getElementById('opcoes');
         opts.innerHTML = "";
         
-        // Embaralha as opções
-        const opcoesEmbaralhadas = [...item.o].sort(() => Math.random() - 0.5);
+        const embaralhadas = [...item.o].sort(() => Math.random() - 0.5);
 
-        opcoesEmbaralhadas.forEach(opt => {
+        embaralhadas.forEach(opt => {
             const b = document.createElement('button');
             b.className = "opcao-btn";
             b.innerText = opt;
             b.onclick = () => {
-                const todos = document.querySelectorAll('.opcao-btn');
-                todos.forEach(btn => btn.disabled = true);
+                document.querySelectorAll('.opcao-btn').forEach(btn => btn.disabled = true);
                 if(opt === item.c) b.classList.add('correto');
                 else b.classList.add('errado');
-                
-                setTimeout(() => { 
-                    qAtual = (qAtual + 1) % bancoPlacas.length; 
-                    carregarPergunta(); 
-                }, 1200);
+                setTimeout(() => { qAtual = (qAtual + 1) % bancoPlacas.length; carregarPergunta(); }, 1200);
             };
             opts.appendChild(b);
         });
         document.getElementById('quiz-status').innerText = `Placa ${qAtual + 1} de ${bancoPlacas.length}`;
     }
 
-    function salvarFamilia() { localStorage.setItem('telFamilia', document.getElementById('tel-familia').value); alert('Salvo! ✅'); }
-    function ligarFamilia() { const n = localStorage.getItem('telFamilia'); if(n) window.location.href="tel:"+n; else alert('Configure o número!'); }
-    function enviarZap() { window.open("https://wa.me🚨 Ajuda!", "_blank"); }
+    function salvarFamilia() { localStorage.setItem('telFamilia', document.getElementById('tel-familia').value); alert('Número Salvo! ✅'); }
+    function ligarFamilia() { const n = localStorage.getItem('telFamilia'); if(n) window.location.href="tel:"+n; else alert('Salve um número!'); }
+    function enviarZap() { window.open("https://wa.me🚨 Preciso de ajuda!", "_blank"); }
     function carregarMapa() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(p => { document.getElementById('google-maps').src = `https://maps.google.com{p.coords.latitude},${p.coords.longitude}&z=15&output=embed`; }); } }
 </script>
 </body>
