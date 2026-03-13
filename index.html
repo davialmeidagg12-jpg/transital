@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Emergência Transital PRO</title>
-    <!-- Biblioteca do Scanner -->
     <script src="https://unpkg.com"></script>
 
     <style>
@@ -12,56 +11,34 @@
             --amarelo: #ffcc00; --vermelho: #d90429; --verde: #2ecc71; 
             --fundo: #121212; --card: #1e1e1e; --texto: #ffffff;
         }
-
-        body { 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            background: var(--fundo); color: var(--texto); 
-            margin: 0; padding-bottom: 95px; overflow-x: hidden;
-            display: flex; flex-direction: column; align-items: center;
-        }
-        
-        header { 
-            background: var(--amarelo); color: #000; padding: 15px; 
-            text-align: center; font-weight: 900; font-size: 18px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: sticky; top: 0; width: 100%; z-index: 1000;
-        }
-
+        body { font-family: 'Segoe UI', sans-serif; background: var(--fundo); color: var(--texto); margin: 0; padding-bottom: 100px; display: flex; flex-direction: column; align-items: center; }
+        header { background: var(--amarelo); color: #000; padding: 15px; text-align: center; font-weight: 900; width: 100%; position: sticky; top: 0; z-index: 1000; }
         .content { padding: 15px; width: 100%; max-width: 500px; box-sizing: border-box; }
         .page { display: none; animation: fadeIn 0.3s ease; }
         .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .btn-base { 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 8px; border: none; border-radius: 15px; font-weight: 800; color: white; 
-            min-height: 110px; padding: 10px; cursor: pointer; transition: 0.2s; width: 100%; 
-            text-transform: uppercase; box-sizing: border-box; font-size: 11px;
+            min-height: 110px; padding: 10px; cursor: pointer; width: 100%; text-transform: uppercase; font-size: 11px;
         }
-        .btn-base:active { transform: scale(0.95); }
-        .btn-base span { font-size: 35px; }
-
         .bg-vermelho { background: var(--vermelho); }
         .bg-verde { background: var(--verde); }
         .bg-roxo { background: #9b59b6; }
-        .bg-rosa { background: #e91e63; }
         .bg-azul { background: #2980b9; }
+        .bg-rosa { background: #e91e63; }
+        .btn-base span { font-size: 35px; }
 
-        /* ESTILO QUIZ */
+        /* QUIZ */
         .quiz-container { background: #1e1e1e; padding: 20px; border-radius: 20px; text-align: center; border: 1px solid #333; }
-        .quiz-placa { font-size: 90px; margin: 15px 0; display: block; }
-        .opcao-btn { 
-            width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: 2px solid #333;
-            background: #252525; color: white; font-weight: bold; cursor: pointer; transition: 0.2s;
-        }
-        .correto { background: var(--verde) !important; border-color: white !important; }
-        .errado { background: var(--vermelho) !important; border-color: white !important; }
+        .quiz-placa { font-size: 80px; margin: 15px 0; display: block; }
+        .opcao-btn { width: 100%; padding: 15px; margin: 8px 0; border-radius: 10px; border: 2px solid #333; background: #252525; color: white; font-weight: bold; }
+        .correto { background: var(--verde) !important; }
+        .errado { background: var(--vermelho) !important; }
 
-        /* MENU INFERIOR */
-        nav { 
-            position: fixed; bottom: 0; width: 100%; max-width: 500px;
-            background: #1a1a1a; display: flex; justify-content: space-around; 
-            padding: 10px 0; border-top: 1px solid #333; z-index: 1000; 
-        }
+        /* NAV */
+        nav { position: fixed; bottom: 0; width: 100%; max-width: 500px; background: #1a1a1a; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #333; }
         nav button { background: none; border: none; color: #777; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         nav button.active-nav { color: var(--amarelo); font-weight: bold; }
         .nav-icon { font-size: 20px; }
@@ -79,7 +56,6 @@
     <div id="home" class="page active">
         <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid var(--amarelo);">
             <h3 style="margin:0; font-size: 14px; color: var(--amarelo);">PAINEL DE CONTROLE</h3>
-            <p style="margin:5px 0 0 0; font-size: 12px; color: #aaa;">Sistemas de monitoramento prontos.</p>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
             <a href="tel:191" class="btn-base bg-vermelho"><span>🚨</span> POLÍCIA</a>
@@ -87,26 +63,20 @@
             <button onclick="enviarZap()" class="btn-base bg-verde"><span>📍</span> ZAP LOCAL</button>
             <button onclick="showPage('camera', document.getElementById('nav-camera'))" class="btn-base bg-roxo"><span>📷</span> SCANNER</button>
             <button onclick="showPage('mapa', document.getElementById('nav-mapa'))" class="btn-base bg-azul" style="grid-column: span 2; min-height: 80px; flex-direction: row; gap: 15px;">
-                <span>🗺️</span> <b>VER MAPA E TRÂNSITO</b>
+                <span>🗺️</span> <b>VER MAPA</b>
             </button>
         </div>
     </div>
 
-    <!-- 2. IDOSO + CONFIG FAMÍLIA -->
+    <!-- 2. IDOSO -->
     <div id="idoso" class="page">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <span style="font-size: 40px;">👴</span>
-            <h2 style="color: var(--amarelo); margin: 5px 0;">Modo Auxílio</h2>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 15px;">
-            <a href="tel:191" class="btn-base bg-vermelho" style="min-height: 140px; font-size: 18px; border: 3px solid white;"><span>🚨</span> LIGAR POLÍCIA</a>
-            <button onclick="ligarFamilia()" class="btn-base bg-rosa" style="min-height: 140px; font-size: 18px;"><span>❤️</span> CHAMAR FAMÍLIA</button>
-            
-            <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-top: 10px;">
-                <p style="font-size: 12px; color: var(--amarelo); margin: 0 0 10px 0;">Configurar Número da Família:</p>
-                <input type="tel" id="tel-familia" placeholder="Ex: 11999998888">
-                <button onclick="salvarFamilia()" style="width: 100%; padding: 10px; border-radius: 8px; background: var(--verde); border: none; color: white; font-weight: bold;">SALVAR</button>
-            </div>
+        <div style="text-align: center; margin-bottom: 20px;"><span style="font-size: 40px;">👴</span><h2 style="color: var(--amarelo);">Modo Auxílio</h2></div>
+        <a href="tel:191" class="btn-base bg-vermelho" style="min-height: 140px; font-size: 18px; margin-bottom:15px; border: 3px solid white;"><span>🚨</span> LIGAR POLÍCIA</a>
+        <button onclick="ligarFamilia()" class="btn-base bg-rosa" style="min-height: 140px; font-size: 18px;"><span>❤️</span> CHAMAR FAMÍLIA</button>
+        <div style="background: #1e1e1e; padding: 15px; border-radius: 15px; margin-top: 20px;">
+            <p style="font-size: 12px; color: var(--amarelo);">Configurar Número da Família:</p>
+            <input type="tel" id="tel-familia" placeholder="Ex: 11999998888">
+            <button onclick="salvarFamilia()" style="width: 100%; padding: 10px; background: var(--verde); border: none; color: white; font-weight: bold; border-radius: 8px;">SALVAR</button>
         </div>
     </div>
 
@@ -115,26 +85,23 @@
         <h3 style="text-align:center; color: var(--amarelo);">SIMULADO CNH</h3>
         <div class="quiz-container">
             <span id="placa-img" class="quiz-placa">🛑</span>
-            <p id="pergunta-texto" style="font-weight: bold; margin-bottom: 20px;">O que significa esta placa?</p>
+            <p id="pergunta-texto" style="font-weight: bold;">O que significa esta placa?</p>
             <div id="opcoes"></div>
-            <p id="quiz-status" style="margin-top:20px; font-size:12px; color: #888;"></p>
+            <p id="quiz-status" style="margin-top:10px; font-size:12px; color: #888;"></p>
         </div>
     </div>
 
-    <!-- 4. CÂMERA (SCANNER) -->
+    <!-- 4. CÂMERA -->
     <div id="camera" class="page">
-        <h3 style="text-align:center; color: var(--amarelo);">SCANNER DE PLACAS</h3>
-        <div id="reader" style="width: 100%; border-radius: 20px; overflow: hidden; background: #000; min-height: 300px;"></div>
-        <div id="res-scan" style="display:none; margin-top:15px; background: #1e1e1e; padding: 15px; border-radius: 15px; border: 1px solid var(--amarelo);">
-            <p id="placa-detectada" style="font-size: 20px; font-weight: 900; color: var(--amarelo); text-align: center; margin: 0;"></p>
-        </div>
+        <h3 style="text-align:center; color: var(--amarelo);">SCANNER DE PLACA</h3>
+        <div id="reader" style="width: 100%; border-radius: 15px; overflow: hidden; background:#000;"></div>
+        <p style="font-size: 12px; text-align: center; color: #888; margin-top: 10px;">Aponte para a placa para detectar.</p>
     </div>
 
     <!-- 5. MAPA -->
-    <div id="mapa" class="page" style="height: 65vh;">
+    <div id="mapa" class="page" style="height: 60vh;">
         <iframe id="google-maps" width="100%" height="100%" style="border:0; border-radius: 20px;"></iframe>
     </div>
-
 </div>
 
 <nav>
@@ -146,81 +113,65 @@
 </nav>
 
 <script>
-    let scanner = null;
+    let html5QrCode = null;
 
-    // NAVEGAÇÃO PRINCIPAL
     function showPage(pageId, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-nav'));
         document.getElementById(pageId).classList.add('active');
         if(btn) btn.classList.add('active-nav');
-
-        // Para o scanner se sair da página da câmera
-        if(pageId !== 'camera' && scanner) {
-            scanner.clear();
+        
+        // Parar câmera ao sair
+        if(pageId !== 'camera' && html5QrCode) {
+            html5QrCode.stop().catch(() => {});
         }
 
         if(pageId === 'quiz') iniciarQuiz();
-        if(pageId === 'camera') iniciarScanner();
+        if(pageId === 'camera') iniciarCamera();
         if(pageId === 'mapa') carregarMapa();
     }
 
-    // LÓGICA DO SCANNER (Simulação de OCR)
-    function iniciarScanner() {
-        scanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
-        scanner.render((text) => {
-            document.getElementById('res-scan').style.display = 'block';
-            document.getElementById('placa-detectada').innerText = "PLACA: " + text.toUpperCase();
-        });
+    function iniciarCamera() {
+        html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (decodedText) => {
+            alert("Placa Detectada: " + decodedText);
+        }).catch(err => { console.error("Erro na câmera: ", err); });
     }
 
-    // LÓGICA DO QUIZ (Simplificada para o exemplo)
-    const perguntas = [
-        { placa: "🛑", correta: "Parada Obrigatória", opcoes: ["Pare", "Parada Obrigatória", "Dê a preferência"] },
-        { placa: "🚫", correta: "Sentido Proibido", opcoes: ["Sentido Proibido", "Atenção", "Pare"] }
+    // BANCO DE DADOS QUIZ
+    const bancoPlacas = [
+        { p: "🛑", c: "Parada Obrigatória", o: ["Pare", "Parada Obrigatória", "Atenção"] },
+        { p: "🚫", c: "Sentido Proibido", o: ["Sentido Proibido", "Pare", "Não Entre"] },
+        { p: "🅿️", c: "Estacionamento", o: ["Pare", "Estacionamento", "Pátio"] },
+        { p: "🚸", c: "Área Escolar", o: ["Crianças", "Área Escolar", "Parque"] },
+        { p: "🚴", c: "Ciclistas", o: ["Ciclistas", "Proibido Bicicleta", "Ciclovia"] },
+        { p: "⛽", c: "Posto", o: ["Posto", "Mecânico", "Comida"] }
     ];
-    let perguntaAtual = 0;
+    let qAtual = 0;
 
     function iniciarQuiz() {
-        const p = perguntas[perguntaAtual];
-        document.getElementById('placa-img').innerText = p.placa;
-        const divOpcoes = document.getElementById('opcoes');
-        divOpcoes.innerHTML = "";
-        p.opcoes.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = "opcao-btn";
-            btn.innerText = opt;
-            btn.onclick = () => {
-                if(opt === p.correta) btn.classList.add('correto');
-                else btn.classList.add('errado');
-                setTimeout(() => { perguntaAtual = (perguntaAtual + 1) % perguntas.length; iniciarQuiz(); }, 1000);
+        const item = bancoPlacas[qAtual];
+        document.getElementById('placa-img').innerText = item.p;
+        const opts = document.getElementById('opcoes');
+        opts.innerHTML = "";
+        item.o.forEach(opt => {
+            const b = document.createElement('button');
+            b.className = "opcao-btn";
+            b.innerText = opt;
+            b.onclick = () => {
+                if(opt === item.c) b.classList.add('correto');
+                else b.classList.add('errado');
+                setTimeout(() => { qAtual = (qAtual + 1) % bancoPlacas.length; iniciarQuiz(); }, 1000);
             };
-            divOpcoes.appendChild(btn);
+            opts.appendChild(b);
         });
+        document.getElementById('quiz-status').innerText = `Pergunta ${qAtual + 1} de ${bancoPlacas.length}`;
     }
 
-    // FUNÇÕES DE SUPORTE
-    function salvarFamilia() {
-        const num = document.getElementById('tel-familia').value;
-        localStorage.setItem('telFamilia', num);
-        alert('Número Salvo! ✅');
-    }
-
-    function ligarFamilia() {
-        const num = localStorage.getItem('telFamilia');
-        if(num) window.location.href = "tel:" + num;
-        else alert('Configure o número abaixo!');
-    }
-
-    function enviarZap() { window.open("https://wa.me🚨 Preciso de ajuda!", "_blank"); }
-
-    function carregarMapa() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(p => {
-                document.getElementById('google-maps').src = `https://maps.google.com{p.coords.latitude},${p.coords.longitude}&z=15&output=embed`;
-            });
-        }
-    }
+    function salvarFamilia() { localStorage.setItem('telFamilia', document.getElementById('tel-familia').value); alert('Salvo!'); }
+    function ligarFamilia() { const n = localStorage.getItem('telFamilia'); if(n) window.location.href="tel:"+n; else alert('Configure o número!'); }
+    function enviarZap() { window.open("https://wa.me🚨 Ajuda!", "_blank"); }
+    function carregarMapa() { if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(p => { document.getElementById('google-maps').src = `https://maps.google.com{p.coords.latitude},${p.coords.longitude}&z=15&output=embed`; }); } }
 </script>
 </body>
 </html>
