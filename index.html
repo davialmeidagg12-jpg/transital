@@ -35,11 +35,12 @@
     </style>
 </head>
 <body>
-
+<!-- ... (mantenha seu <head> e <style> igual) ... -->
+<body>
 <header>🛡️ EMERGÊNCIA TRANSITAL PRO</header>
 
 <div class="content">
-    <!-- PÁGINA 1: HOME -->
+    <!-- PÁGINA 1: INÍCIO -->
     <div id="home" class="page active">
         <h3 style="text-align:center; color: var(--amarelo);">PAINEL DE CONTROLE</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -47,9 +48,8 @@
             <a href="tel:193" class="btn-base bg-vermelho" style="background:#b91c1c;"><span>🚑</span> BOMBEIROS</a>
             <button onclick="enviarZap()" class="btn-base bg-verde"><span>📍</span> MANDAR ZAP</button>
             <button onclick="showPage('camera', this)" class="btn-base bg-roxo"><span>📷</span> LER PLACA</button>
-            
             <button onclick="showPage('mapa', this)" class="btn-base" style="grid-column: span 2; background: #2980b9; flex-direction: row; gap: 15px;">
-                <span>🗺️</span> <b>VER MAPA E TRÂNSITO</b>
+                <span>🗺️</span> <b>VER MAPA</b>
             </button>
         </div>
     </div>
@@ -58,28 +58,27 @@
     <div id="idoso" class="page">
         <h3 style="text-align:center; color: var(--amarelo);">MODO IDOSO</h3>
         <div style="display: flex; flex-direction: column; gap: 15px;">
-            <a href="tel:191" class="btn-base bg-vermelho"><span>🚨</span> LIGAR PARA POLÍCIA</a>
-            <button onclick="ligarFamilia()" class="btn-base bg-rosa"><span>❤️</span> LIGAR PARA FAMÍLIA</button>
-            <button onclick="enviarZap()" class="btn-base bg-verde"><span>📍</span> ENVIAR MINHA LOCALIZAÇÃO</button>
+            <button onclick="ligarFamilia()" class="btn-base bg-rosa"><span>❤️</span> FAMÍLIA</button>
+            <button onclick="enviarZap()" class="btn-base bg-verde"><span>📍</span> MANDAR ZAP</button>
         </div>
     </div>
 
     <!-- PÁGINA 3: FAMÍLIA -->
     <div id="familia" class="page">
-        <h3 style="text-align:center; color: var(--amarelo);">CONTATO DE EMERGÊNCIA</h3>
-        <input type="tel" id="tel-familia" placeholder="DDD + Número" style="width:100%; padding:15px; border-radius:10px; margin-bottom:10px;">
-        <button onclick="salvarFamilia()" class="btn-base bg-verde">💾 SALVAR NÚMERO</button>
+        <h3 style="text-align:center; color: var(--amarelo);">CONTATO</h3>
+        <input type="tel" id="tel-familia" placeholder="DDD + Número">
+        <button onclick="salvarFamilia()" class="btn-base bg-verde">💾 SALVAR</button>
     </div>
 
     <!-- PÁGINA 4: MAPA -->
     <div id="mapa" class="page" style="height: 400px;">
-        <iframe id="google-maps" width="100%" height="100%" style="border:0; border-radius:15px;"></iframe>
+        <iframe id="google-maps" width="100%" height="100%" style="border:0;"></iframe>
     </div>
 
     <!-- PÁGINA 5: CÂMERA -->
     <div id="camera" class="page">
-        <h3 style="text-align:center; color:var(--amarelo);">Identificador de Placas</h3>
-        <div id="reader" style="width: 100%;"></div>
+        <h3 style="text-align:center;">SCANNER</h3>
+        <div id="reader"></div>
     </div>
 </div>
 
@@ -93,31 +92,19 @@
 
 <script>
     function showPage(pageId, btn) {
-        // Esconde todas as páginas
+        // Esconde todas as páginas e remove destaque do menu
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        // Mostra a página clicada
-        document.getElementById(pageId).classList.add('active');
-        
-        // Ajusta cores do menu
         document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-nav'));
-        if(btn.tagName === "BUTTON") btn.classList.add('active-nav');
-
-        if(pageId === 'mapa') carregarMapa();
-    }
-
-    function carregarMapa() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(p => {
-                const url = `https://www.google.com{p.coords.latitude},${p.coords.longitude}&zoom=15`;
-                document.getElementById('google-maps').src = url;
-            });
-        }
+        
+        // Mostra a página selecionada e destaca o botão
+        document.getElementById(pageId).classList.add('active');
+        if(btn) btn.classList.add('active-nav');
     }
 
     function salvarFamilia() {
         const num = document.getElementById('tel-familia').value;
         localStorage.setItem('telFamilia', num);
-        alert('Número salvo com sucesso!');
+        alert('Número salvo!');
     }
 
     function ligarFamilia() {
@@ -127,10 +114,10 @@
     }
 
     function enviarZap() {
-        const texto = "Preciso de ajuda! Minha localização: https://www.google.com";
-        window.open(`https://wa.me{texto}`, '_blank');
+        window.open("https://wa.me de ajuda!", "_blank");
     }
 </script>
+</body>
 
 </body>
 </html>
